@@ -17,6 +17,8 @@ red_server =  Flask(__name__)
 #http://192.168.137.221:5000/streaming
 #parole più utilizzate con cluster
 #parole più grandi in base alla loro importanza
+#associate a tag to every title submission
+#big tagg, big amount of them
 
 @red_server.route('/streaming')
 def streming():
