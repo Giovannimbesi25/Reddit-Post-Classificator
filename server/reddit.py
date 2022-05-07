@@ -25,7 +25,7 @@ def streming():
     subreddit = reddit.subreddit("AskReddit")
     for submission in subreddit.new(limit=1):
         return red_server.response_class(
-        response=json.dumps({ "title": submission.title, "score" : submission.score }),
+        response=json.dumps({ "title": submission.title}),
         mimetype='application/json'
         )
             

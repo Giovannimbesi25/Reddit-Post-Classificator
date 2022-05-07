@@ -2,6 +2,77 @@ version: '3.7'
 
 services:
 
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.0.1
+    container_name: zookeeper
+    hostname: zookeeper
+    ports:
+        - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    networks:
+        - reddit-network
+
+
+  kafkaserver:
+    image: confluentinc/cp-kafka:7.0.1
+    container_name: kafkaserver
+    hostname: kafkaserver
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafkaserver:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+    networks:
+        - reddit-network
+
+
+  kafka-ui:
+    image: provectuslabs/kafka-ui
+    container_name: kafka-ui
+    depends_on:
+      - zookeeper
+      - kafkaserver
+    ports:
+      - "8080:8080"
+    restart: always
+    environment:
+      KAFKA_CLUSTERS_0_NAME: local
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafkaserver:9092
+      KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper:2181
+    networks:
+        - reddit-network
+
+
+  init-kafka:
+    image: confluentinc/cp-kafka:6.1.1
+    networks:
+      - reddit-network
+    depends_on:
+      - kafkaserver
+      - zookeeper
+      - kafka-ui
+    entrypoint: [ '/bin/sh', '-c' ]
+    command: |
+      "
+      # blocks until kafka is reachable
+      kafka-topics --bootstrap-server kafkaserver:9092 --list
+
+      echo -e 'Creating kafka topics'
+      kafka-topics --bootstrap-server kafkaserver:9092 --create --if-not-exists --topic pubMed --replication-factor 1 --partitions 1
+
+      echo -e 'Successfully created the following topics:'
+      kafka-topics --bootstrap-server kafkaserver:9092 --list
+      "
+
   reddit:
     build:
       context: server
@@ -10,16 +81,20 @@ services:
     ports: 
       - "5000:5000"
     networks:
-      - logstash-network
+      - reddit-network
 
   logstash:
     build:
       context: LogstashDocker
       dockerfile: Dockerfile
-    image: sentiment-analysis-logstash
-    # image: docker.elastic.co/logstash/logstash:7.11.2
+    #image: sentiment-analysis-logstash
+    image: docker.elastic.co/logstash/logstash:7.11.2
     depends_on:
       - reddit
+      - zookeeper
+      - kafka-ui
+      - init-kafka
+      - kafkaserver
     volumes: 
         - $PWD/LogstashDocker/pipeline/:/usr/share/logstash/pipeline/
     environment: 
@@ -28,76 +103,7 @@ services:
     ports:
       - "10155:10155"
     networks:
-        - logstash-network
-
-  zookeeper:
-    image: confluentinc/cp-zookeeper:7.0.1
-    container_name: zookeeper
-    environment:
-      ZOOKEEPER_CLIENT_PORT: 2181
-      ZOOKEEPER_TICK_TIME: 2000
-
-
-  broker:
-    image: confluentinc/cp-kafka:7.0.1
-    container_name: broker
-    ports:
-      - "9092:9092"
-    depends_on:
-      - reddit
-      - logstash
-      - zookeeper
-    environment:
-      KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092,PLAINTEXT_INTERNAL://broker:29092
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
-      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
-
-
-  kafka-ui:
-    image: provectuslabs/kafka-ui
-    container_name: kafka-ui
-    depends_on:
-      - logstash
-      - zookeeper
-      - broker
-      - reddit
-    ports:
-      - "8080:8080"
-    restart: always
-    environment:
-      KAFKA_CLUSTERS_0_NAME: local
-      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: broker:29092
-      KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper:2181
-
-
-  init-kafka:
-    image: confluentinc/cp-kafka:6.1.1
-    depends_on:
-      - reddit
-      - broker
-      - zookeeper
-      - kafka-ui
-      - logstash
-      - reddit
-    entrypoint: [ '/bin/sh', '-c' ]
-    command: |
-      "
-      # blocks until kafka is reachable
-      kafka-topics --bootstrap-server broker:29092 --list
-
-      echo -e 'Creating kafka topics'
-      kafka-topics --bootstrap-server broker:29092 --create --if-not-exists --topic orders --replication-factor 1 --partitions 1
-      kafka-topics --bootstrap-server broker:29092 --create --if-not-exists --topic payments --replication-factor 1 --partitions 1
-
-      echo -e 'Successfully created the following topics:'
-      kafka-topics --bootstrap-server broker:29092 --list
-      "
-  
-  
+        - reddit-network
 
 
 networks:
