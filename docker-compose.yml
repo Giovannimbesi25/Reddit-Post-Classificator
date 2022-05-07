@@ -67,7 +67,7 @@ services:
       kafka-topics --bootstrap-server kafkaserver:9092 --list
 
       echo -e 'Creating kafka topics'
-      kafka-topics --bootstrap-server kafkaserver:9092 --create --if-not-exists --topic pubMed --replication-factor 1 --partitions 1
+      kafka-topics --bootstrap-server kafkaserver:9092 --create --if-not-exists --topic subTitle --replication-factor 1 --partitions 1
 
       echo -e 'Successfully created the following topics:'
       kafka-topics --bootstrap-server kafkaserver:9092 --list
@@ -87,7 +87,6 @@ services:
     build:
       context: LogstashDocker
       dockerfile: Dockerfile
-    #image: sentiment-analysis-logstash
     image: docker.elastic.co/logstash/logstash:7.11.2
     depends_on:
       - reddit
