@@ -1,20 +1,4 @@
-version: '3.7'
-
-services:
-
-  reddit:
-    build:
-      context: server
-      dockerfile: Dockerfile
-    image: reddit
-    depends_on:
-      - logstash
-    ports: 
-      - "5000:5000"
-    networks:
-      - reddit-network
-
-  zookeeper:
+zookeeper:
     image: confluentinc/cp-zookeeper:7.0.1
     container_name: zookeeper
     hostname: zookeeper
@@ -85,59 +69,12 @@ services:
       kafka-topics --bootstrap-server kafkaserver:9092 --list "
 
 
-  logstash:
-    build:
-      context: LogstashDocker
-      dockerfile: Dockerfile
-    image: docker.elastic.co/logstash/logstash:7.11.2
-    depends_on:
-        - zookeeper
-        - kafka-ui
-        - init-kafka
-        - kafkaserver
-    volumes: 
-        - $PWD/LogstashDocker/pipeline/:/usr/share/logstash/pipeline/
-    environment: 
-        # limite RAM 1gb. 
-        - "LS_JAVA_OPTS=-Xms1g -Xmx1g"
-    ports:
-      - "5001:5001"
-    networks:
-        - reddit-network
 
-  # spark:
-  #   build: 
-  #       context: spark
-  #   image: reddit:spark
-  #   dockerfile: Dockerfile
-  #   container_name: spark
-  #   command: ["structured_streaming_example.py", "org.apache.spark:spark-sql-kafka-0-10_2.12:3.1.1,org.elasticsearch:elasticsearch-spark-30_2.12:7.12.1"]
-  #   environment: 
-  #       SPARK_ACTION: "spark-submit-python"
-  #   ports: 
-  #       - "4040:4040"
-  #   depends_on: 
-  #       - kafkaserver
-  #       - elasticsearch
-  #       - zookeeper
-  #       - logstash
-  #   networks: 
-  #       - reddit-network
-  #   deploy:
-  #     resources:
-  #       limits:
-  #         cpus: '1.0'
-  #         memory: 1g
-  #       reservations:
-  #         cpus: '0.5'
-  #         memory: 500m
+add to logstash
+      - zookeeper
+      - kafka-ui
+      - init-kafka
+      - kafkaserver
 
 
-networks:
 
-  reddit-network:
-    name: reddit-network
-    driver: bridge
-
-    
-    

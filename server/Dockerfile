@@ -6,6 +6,7 @@ COPY . .
 
 RUN pip --no-cache-dir install -r requirements.txt
 
+
 ENV PYTHONUNBUFFERED=0
 
 EXPOSE 5000

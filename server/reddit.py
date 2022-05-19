@@ -1,41 +1,56 @@
 import praw
-from flask import Flask, request, redirect, json
+import requests
+from time import sleep
+
 
 reddit = praw.Reddit(
     client_id="0thB8dNY6QTqf53ab09HXw",
     client_secret="Ex-B3JebUCpNAfsUffrgGofkL701UQ",
     user_agent="tapApp",
-        username="giovannImbs",
+    username="giovannImbs",
     password="Dragon25",
 
 )
 
-red_server =  Flask(__name__)
-
-
-    
+url = "http://logstash:5001"
 #http://192.168.137.221:5000/streaming
 #parole più utilizzate con cluster
 #parole più grandi in base alla loro importanza
 #associate a tag to every title submission
 #big tagg, big amount of them
 
-@red_server.route('/streaming')
+
+
+
 def streming():
-    subreddit = reddit.subreddit("AskReddit")
-    for submission in subreddit.new(limit=1):
-        return red_server.response_class(
-        response=json.dumps({ "title": submission.title}),
-        mimetype='application/json'
-        )
-            
+    old_id = ""
+    new_id = ""
+    while(True):
+        subreddit = reddit.subreddit("AskReddit")
+        for submission in subreddit.new(limit=1):
+            if(old_id == ""):
+                try:
+                    r = requests.post(url, data={'title': submission.title})
+                    old_id = submission.id
+                except:
+                    print("Error try except")
+                    sleep(3)
+                    continue
+            else:
+                new_id = submission.id
+                if( old_id != new_id):
+                    r = requests.post(url, data={'title': submission.title})
+                    old_id = new_id
+                    print("New reddit send")
+                else:
+                    print("Same subreddit")
+        
+        sleep(3)
+
+streming()
 
 
 
-if __name__ == "__main__":
-    red_server.run(debug=True,
-            host='0.0.0.0',
-            port=5000)
     
     
 
