@@ -30,7 +30,7 @@ def streming():
         for submission in subreddit.new(limit=1):
             if(old_id == ""):
                 try:
-                    r = requests.post(url, data={'title': submission.title})
+                    r = requests.post(url, json={'title': submission.title})
                     old_id = submission.id
                 except:
                     print("Error try except")
@@ -39,7 +39,7 @@ def streming():
             else:
                 new_id = submission.id
                 if( old_id != new_id):
-                    r = requests.post(url, data={'title': submission.title})
+                    r = requests.post(url, json={'title': submission.title})
                     old_id = new_id
                     print("New reddit send")
                 else:

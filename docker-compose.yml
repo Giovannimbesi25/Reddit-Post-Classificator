@@ -2,6 +2,23 @@ version: '3.7'
 
 services:
 
+
+
+    #-------------------------------#
+    # Spark                         #
+    #-------------------------------#
+
+  # spark:
+  #   build: 
+  #     context: streaming
+  #   container_name: spark-streaming
+  #   networks:
+  #     - tutorato-tap-net
+  #   depends_on:
+  #     - zookeeper
+  #     - kafkaserver 
+
+
   reddit:
     build:
       context: server
@@ -131,6 +148,8 @@ services:
   #       reservations:
   #         cpus: '0.5'
   #         memory: 500m
+
+
 
 
 networks:
