@@ -30,7 +30,7 @@ services:
       - "5000:5000"
     networks:
       - reddit-network
-
+  
   zookeeper:
     image: confluentinc/cp-zookeeper:7.0.1
     container_name: zookeeper
@@ -96,10 +96,12 @@ services:
       kafka-topics --bootstrap-server kafkaserver:9092 --list
 
       echo -e 'Creating kafka topics'
-      kafka-topics --bootstrap-server kafkaserver:9092 --create --if-not-exists --topic subTitle --replication-factor 1 --partitions 1
+      kafka-topics --bootstrap-server kafkaserver:9092 --create --if-not-exists --topic reddit_post --replication-factor 1 --partitions 1
 
       echo -e 'Successfully created the following topics:'
       kafka-topics --bootstrap-server kafkaserver:9092 --list "
+
+    
 
 
   logstash:
