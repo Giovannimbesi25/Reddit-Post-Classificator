@@ -1,6 +1,7 @@
 import praw
 import requests
 from time import sleep
+import csv
 
 
 reddit = praw.Reddit(
@@ -27,7 +28,7 @@ def streming():
     new_id = ""
     while(True):
         subreddit = reddit.subreddit("AskReddit")
-        for submission in subreddit.new(limit=1):
+        for submission in subreddit.new(limit=1000):
             if(old_id == ""):
                 try:
                     r = requests.post(url, json={'title': submission.title})
@@ -45,6 +46,7 @@ def streming():
                 else:
                     print("Same subreddit")
         
+            
         sleep(3)
 
 streming()
