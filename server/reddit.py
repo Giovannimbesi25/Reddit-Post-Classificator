@@ -47,7 +47,7 @@ def streming():
                     print("Same subreddit")
         
             
-        sleep(3)
+        sleep(5)
 
 streming()
 
