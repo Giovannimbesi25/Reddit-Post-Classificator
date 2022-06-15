@@ -57,7 +57,7 @@ def main():
 
     results = model.transform(df)
     
-    results = results.select("mytokens","prediction")
+    results = results.select("filtered_tokens","prediction")
 
     results.writeStream\
         .foreachBatch(process_batch) \
