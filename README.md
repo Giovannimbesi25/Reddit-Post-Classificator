@@ -1,2 +1,4 @@
-# tapProject
-Reddit Classificator
+# Reddit Classificator
+
+##zap Quickstart
+
