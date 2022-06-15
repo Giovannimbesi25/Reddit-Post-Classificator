@@ -1,2 +1,2 @@
 # tapProject
-A simple project for TAP course
+<center><h1> Reddit Classificator</h1></center>
