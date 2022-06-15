@@ -1,4 +1,4 @@
 # Reddit Classificator
 
-##zap Quickstart
+## Quickstart
 
