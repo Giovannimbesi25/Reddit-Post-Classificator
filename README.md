@@ -9,7 +9,8 @@ docker-compose up
 
 ```
 ## Possible Error
-** ERROR: for kibana  Container "id container" is unhealthy ** 
+**ERROR: for kibana  Container "id container" is unhealthy** 
+
 Possible Solution: sudo sysctl -w vm.max_map_count=262144
 
 | Container  | URL |Description|
