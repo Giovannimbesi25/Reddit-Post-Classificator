@@ -9,6 +9,9 @@ In questo tutorial si vuole costruire un sistema di classificazione real-time ch
 
 ## Quickstart
 
+Per poter eseguire la repo, è necessario creare un file .env all'interno della cartella "server". Questo dovrà contenere le credenziali per effettuare le richieste a reddit. Per qualsiasi informazione consiglio la <a href="https://www.jcchouinard.com/get-reddit-api-credentials-with-praw/" target="_blank">guida</a>
+
+
 ```
 git clone https://github.com/Giovannimbesi25/Reddit-Post-Classificator.git
 cd Reddit-Post-Classificator
