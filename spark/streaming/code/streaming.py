@@ -42,7 +42,6 @@ def main():
     spark = SparkSession.builder.appName(APP_NAME).getOrCreate()
     spark.sparkContext.setLogLevel("ERROR")
 
-    #label_dict = {'electronics':1.0, 'music':2.0, 'sports':3.0, 'sex/relationships':4.0 , 'video_game':0.0, 'politics/viewpoint':5.0}
 
 
     model = PipelineModel.load("model")

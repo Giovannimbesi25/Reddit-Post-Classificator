@@ -2,14 +2,20 @@ import praw
 import requests
 from time import sleep
 import csv
+import os
+from dotenv import load_dotenv, find_dotenv
+
+
+print(load_dotenv())
+
 
 
 reddit = praw.Reddit(
-    client_id="0thB8dNY6QTqf53ab09HXw",
-    client_secret="Ex-B3JebUCpNAfsUffrgGofkL701UQ",
-    user_agent="tapApp",
-    username="giovannImbs",
-    password="Dragon25",
+    client_id=os.getenv('client_id'),
+    client_secret=os.getenv('client_secret'),
+    user_agent=os.getenv('user_agent'),
+    username=os.getenv('username'),
+    password=os.getenv('password'),
 
 )
 
@@ -22,7 +28,7 @@ def streming():
     new_id = ""
     while(True):
         subreddit = reddit.subreddit("AskReddit")
-        for submission in subreddit.new(limit=1000):
+        for submission in subreddit.new(limit=1):
             if(old_id == ""):
                 try:
                     r = requests.post(url, json={'title': submission.title})
