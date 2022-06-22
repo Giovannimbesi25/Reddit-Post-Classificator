@@ -1,6 +1,6 @@
 # Reddit Classificator
 
-In questo tutorial si vuole costruire un sistema di classificazione real-time che permetta di suddividere i post di reddit in categorie, per poi visualizzarne graficamente i risultati. L'obbiettivo è quello di riuscire a predire l'argomento dei post, sulla base del solo titolo, evitando quindi che l'utente debba cliccarci.
+In questo tutorial si vuole costruire un sistema di classificazione real-time che permetta di suddividere i post di reddit in categorie, per poi visualizzarne graficamente i risultati ottenuti. 
 
 ## Data flow
 
