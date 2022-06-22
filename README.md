@@ -1,6 +1,6 @@
 # Reddit Classificator
 
-In questo tutorial si vuole costruire un sistema di classificazione real-time che permetta di suddividere i post di reddit in categorie, per poi visualizzarne graficamente i risultati ottenuti. 
+In questo tutorial si vuole realizzare un sistema di classificazione real-time che permetta di suddividere i post di reddit in categorie, per poi visualizzarne graficamente i risultati ottenuti. 
 
 ## Data flow
 
@@ -9,7 +9,7 @@ In questo tutorial si vuole costruire un sistema di classificazione real-time ch
 
 ## Quickstart
 
-Per poter eseguire la repo, è necessario creare un file .env all'interno della cartella "server". Questo dovrà contenere le credenziali per effettuare le richieste a reddit. Per qualsiasi informazione consiglio la <a href="https://www.jcchouinard.com/get-reddit-api-credentials-with-praw/" target="_blank">guida</a>
+Per poter eseguire la repo, è necessario creare un file .env all'interno della cartella "server". Questo dovrà contenere le credenziali per effettuare le richieste a reddit. Per qualsiasi informazione consiglio la <a href="https://www.jcchouinard.com/get-reddit-api-credentials-with-praw/" target="_blank">guida</a>.
 
 
 ```
@@ -21,7 +21,7 @@ docker-compose up
 ## Possible Error
 **ERROR: for kibana  Container "id container" is unhealthy** 
 
-Possible Solution: sudo sysctl -w vm.max_map_count=262144
+Possibile soluzione: sudo sysctl -w vm.max_map_count=262144
 
 ## Useful Links
 
@@ -38,5 +38,5 @@ Un ringraziamento a <a href="https://www.kaggle.com/datasets/mswarbrickjones/red
 
 
 
-## Authors
+## Author
 **Imbesi Giovanni**
