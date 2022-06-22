@@ -34,7 +34,7 @@ Possible Solution: sudo sysctl -w vm.max_map_count=262144
 ## Attenzione
 
 All'interno della repo è presente il dataset utilizzato per allenare il modello, per cui il download potrebbe richiedere un pò di tempo.
-Grazie a Kaggle per aver messo a disposizione i dati.
+Un ringraziamento a <a href="https://www.kaggle.com/datasets/mswarbrickjones/reddit-selfposts" target="_blank">Kaggle</a> per aver messo a disposizione i dati.
 
 
 
