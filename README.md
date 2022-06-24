@@ -29,7 +29,6 @@ Possibile soluzione: sudo sysctl -w vm.max_map_count=262144
 | ------------- | ------------- | ------- |
 |  kafka-UI  |  http://localhost:10000  |    Open kafka UI |
 | kibana  | http://localhost:5601  |    Kibana base URL |
-| elasticsearch  | http://localhost:9200 |    ElasticSearch base URL |
 
 ## Attenzione
 
