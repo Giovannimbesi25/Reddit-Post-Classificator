@@ -1,6 +1,6 @@
 # Reddit Classificator
 
-In questo tutorial si vuole realizzare un sistema di classificazione real-time che permetta di suddividere i post di reddit in categorie, per poi visualizzarne graficamente i risultati ottenuti. L'obbiettivo è quello di sfruttare delle tecnologie per la gestione, in streaming, di grandi quantità di dati. 
+In questo tutorial si vuole realizzare un sistema di classificazione real-time che permetta di suddividere i post di reddit in categorie, per poi visualizzarne graficamente i risultati ottenuti. 
 
 ## Data flow
 
