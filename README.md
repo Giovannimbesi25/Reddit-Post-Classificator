@@ -1,6 +1,6 @@
 # Reddit Classificator
 
-In questo tutorial si vuole realizzare un sistema di classificazione real-time che permetta di suddividere i post di reddit in categorie, per poi visualizzarne graficamente i risultati ottenuti. 
+In questo tutorial si vuole realizzare un sistema di classificazione real-time che permetta di suddividere i post di reddit in categorie, per poi visualizzarne graficamente i risultati ottenuti. L'obbiettivo è quello di sfruttare delle tecnologie per la gestione, in streaming, di grandi quantità di dati. 
 
 ## Data flow
 
@@ -32,8 +32,8 @@ Possibile soluzione: sudo sysctl -w vm.max_map_count=262144
 
 ## Attenzione
 
-All'interno della repo è presente il dataset utilizzato per allenare il modello, per cui il download potrebbe richiedere un pò di tempo.
-Un ringraziamento a <a href="https://www.kaggle.com/datasets/mswarbrickjones/reddit-selfposts" target="_blank">Kaggle</a> per aver messo a disposizione i dati.
+All'interno della repo è presente il dataset utilizzato per allenare il modello, per cui il download potrebbe richiedere del tempo.
+Un ringraziamento a <a href="https://www.kaggle.com/datasets/mswarbrickjones/reddit-selfposts" target="_blank">Kaggle</a> per aver messo a disposizione il dataset.
 
 
 
