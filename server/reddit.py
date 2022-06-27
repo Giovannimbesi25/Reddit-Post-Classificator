@@ -35,7 +35,6 @@ def streming():
                     old_id = submission.id
                 except:
                     print("Error try except")
-                    sleep(3)
                     continue
             else:
                 new_id = submission.id

@@ -43,7 +43,6 @@ def main():
     spark.sparkContext.setLogLevel("ERROR")
 
 
-
     model = PipelineModel.load("model")
     schema = get_record_schema()
 
